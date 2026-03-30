@@ -4,27 +4,640 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Our Saro Heritage</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #2d3436;
+            background-color: #fafaf8;
+        }
+
+        /* Color palette */
+        :root {
+            --deep-green: #1a4d2e;
+            --warm-gold: #d4a574;
+            --earth-brown: #8b6f47;
+            --light-cream: #f5f2ed;
+            --accent-rust: #b85c38;
+            --soft-green: #2d5a3d;
+        }
+
+        /* Header & Title */
+        .hero {
+            background: linear-gradient(135deg, var(--deep-green) 0%, var(--soft-green) 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            margin-bottom: 10px;
+            font-weight: 900;
+            letter-spacing: -1px;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            font-weight: 500;
+            opacity: 0.95;
+        }
+
+        /* Container */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Section styling */
+        section {
+            margin-bottom: 60px;
+            scroll-margin-top: 100px;
+        }
+
+        section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            color: var(--deep-green);
+            margin-bottom: 30px;
+            font-weight: 700;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        section h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: var(--warm-gold);
+        }
+
+        /* Who Were the Saro */
+        #who-were-saro {
+            background: var(--light-cream);
+            padding: 40px;
+            border-radius: 8px;
+        }
+
+        #who-were-saro p {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding: 40px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 3px;
+            height: 100%;
+            background: var(--warm-gold);
+            top: 0;
+        }
+
+        .timeline-event {
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .timeline-event:nth-child(odd) .timeline-content {
+            margin-left: 0;
+            margin-right: auto;
+            width: calc(50% - 30px);
+            text-align: right;
+            padding-right: 40px;
+        }
+
+        .timeline-event:nth-child(even) .timeline-content {
+            margin-left: auto;
+            margin-right: 0;
+            width: calc(50% - 30px);
+            text-align: left;
+            padding-left: 40px;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 20px;
+            background: white;
+            border: 4px solid var(--warm-gold);
+            border-radius: 50%;
+            top: 0;
+            z-index: 10;
+        }
+
+        .timeline-year {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--deep-green);
+            margin-bottom: 8px;
+        }
+
+        .timeline-description {
+            font-size: 1rem;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        /* Mobile timeline */
+        @media (max-width: 768px) {
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-event:nth-child(odd) .timeline-content,
+            .timeline-event:nth-child(even) .timeline-content {
+                width: calc(100% - 60px);
+                margin-left: 60px;
+                margin-right: 0 !important;
+                text-align: left;
+                padding-right: 0 !important;
+                padding-left: 0 !important;
+            }
+
+            .timeline-dot {
+                left: 20px;
+            }
+        }
+
+        /* Surnames Section */
+        .surnames-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .surname-card {
+            background: white;
+            border-left: 4px solid var(--warm-gold);
+            padding: 25px;
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .surname-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+        }
+
+        .surname-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            color: var(--deep-green);
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .surname-origin {
+            font-size: 0.9rem;
+            color: var(--earth-brown);
+            font-weight: 500;
+            margin-bottom: 12px;
+        }
+
+        .surname-person {
+            font-size: 0.95rem;
+            color: #666;
+            font-style: italic;
+        }
+
+        /* Notable People */
+        .notable-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 25px;
+        }
+
+        .notable-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .notable-card:hover {
+            transform: translateY(-6px);
+        }
+
+        .notable-header {
+            background: linear-gradient(135deg, var(--soft-green) 0%, var(--earth-brown) 100%);
+            color: white;
+            padding: 20px;
+            min-height: 80px;
+            display: flex;
+            align-items: flex-end;
+        }
+
+        .notable-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .notable-content {
+            padding: 20px;
+        }
+
+        .notable-title {
+            font-weight: 600;
+            color: var(--accent-rust);
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        .notable-description {
+            font-size: 0.95rem;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Identity Arc */
+        .arc-section {
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            border-top: 3px solid var(--warm-gold);
+        }
+
+        .arc-flow {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .arc-step {
+            background: var(--light-cream);
+            padding: 15px 20px;
+            border-radius: 6px;
+            font-weight: 500;
+            color: var(--deep-green);
+            text-align: center;
+            flex: 1;
+            min-width: 140px;
+            border-left: 3px solid var(--warm-gold);
+        }
+
+        .arc-arrow {
+            color: var(--warm-gold);
+            font-size: 1.5rem;
+            font-weight: bold;
+            flex-basis: 100%;
+            text-align: center;
+        }
+
+        @media (max-width: 600px) {
+            .arc-arrow {
+                writing-mode: vertical-rl;
+                text-orientation: mixed;
+            }
+        }
+
+        /* Why This Matters */
+        #why-matters {
+            background: linear-gradient(135deg, var(--deep-green) 0%, var(--soft-green) 100%);
+            color: white;
+            padding: 50px 40px;
+            border-radius: 8px;
+        }
+
+        #why-matters h2 {
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        #why-matters h2::after {
+            background: var(--warm-gold);
+        }
+
+        #why-matters p {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            opacity: 0.95;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            color: #777;
+            font-size: 0.9rem;
+            margin-top: 40px;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        /* Print styles */
+        @media print {
+            body {
+                background: white;
+            }
+
+            .hero {
+                page-break-after: avoid;
+            }
+
+            section {
+                page-break-inside: avoid;
+            }
+
+            .notable-card,
+            .surname-card {
+                page-break-inside: avoid;
+            }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            .hero {
+                padding: 40px 20px;
+                margin-bottom: 30px;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+                margin-bottom: 8px;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            section h2 {
+                margin-bottom: 20px;
+                font-size: 1.5rem;
+            }
+
+            #who-were-saro,
+            .arc-section,
+            #why-matters {
+                padding: 25px;
+            }
+
+            .surnames-grid,
+            .notable-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .arc-flow {
+                flex-direction: column;
+            }
+
+            .arc-step {
+                width: 100%;
+                min-width: unset;
+            }
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <h1>Welcome to Our Saro Heritage</h1>
-        <nav>
-            <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">About Us</a></li>
-                <li><a href="#">Services</a></li>
-                <li><a href="#">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main>
-        <section>
-            <h2>Our Story</h2>
-            <p>At Our Saro Heritage, we celebrate the rich culture and history of the Saro people.</p>
+    <!-- Hero Section -->
+    <div class="hero">
+        <h1>Our Saro Heritage</h1>
+        <p>The Story of Where We Come From</p>
+        <p style="font-size: 0.95rem; margin-top: 10px; opacity: 0.85;">A family reference guide</p>
+    </div>
+
+    <div class="container">
+        <!-- Section 1: Who Were the Saro -->
+        <section id="who-were-saro">
+            <h2>Who Were the Saro?</h2>
+            <p>
+                The Saro — a name derived from "Salone," a corruption of Sierra Leone — were Africans captured during the transatlantic slave trade. Emancipated by the Royal Navy after the 1807 abolition of the slave trade, they were resettled in Freetown, Sierra Leone, where they built communities and gained access to Western education.
+            </p>
+            <p>
+                Starting in the 1830s, their descendants began migrating back to Nigeria — to Lagos, Abeokuta, and the Niger Delta — where they became known locally as "Saro." Though many were originally Yoruba, the community also included Igbo, Nupe, Hausa, and Efik peoples. What united them was not just origin, but a shared experience of liberation and the determination to rebuild.
+            </p>
         </section>
-    </main>
+
+        <!-- Section 2: Timeline -->
+        <section>
+            <h2>A Timeline of Our Story</h2>
+            <div class="timeline">
+                <div class="timeline-event">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-year">1807</div>
+                        <div class="timeline-description">British Parliament passes the Slave Trade Act. The Royal Navy begins intercepting slave ships and liberating captives.</div>
+                    </div>
+                </div>
+
+                <div class="timeline-event">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-year">1820s–1840s</div>
+                        <div class="timeline-description">Liberated Africans settle in Freetown. They gain Western education through mission schools and Fourah Bay College, becoming lawyers, doctors, and civil servants.</div>
+                    </div>
+                </div>
+
+                <div class="timeline-event">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-year">1830s–1840s</div>
+                        <div class="timeline-description">Saro begin migrating back to Nigeria. They settle in Lagos, Abeokuta, and the Niger Delta, establishing communities in Ebute Metta, Olowogbowo, and Yaba.</div>
+                    </div>
+                </div>
+
+                <div class="timeline-event">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-year">Mid-1800s</div>
+                        <div class="timeline-description">Saro become a dominant commercial force. They pioneer the kola nut trade, establish the oldest churches in Lagos, and expand missionary work across Nigeria.</div>
+                    </div>
+                </div>
+
+                <div class="timeline-event">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-year">1840s</div>
+                        <div class="timeline-description">Bishop Samuel Ajayi Crowther publishes the first Yoruba primer, grammar book, and dictionary. He translates the Bible into Yoruba, preserving the language for future generations.</div>
+                    </div>
+                </div>
+
+                <div class="timeline-event">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-year">1880s</div>
+                        <div class="timeline-description">Systemic discrimination by British colonial authorities. Saro are blocked from promotions despite their achievements. They shift from being Anglophiles to becoming cultural nationalists.</div>
+                    </div>
+                </div>
+
+                <div class="timeline-event">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-year">Late 1800s</div>
+                        <div class="timeline-description">James Johnson leads a revolt among missionaries, demanding greater African involvement. Saro merchants like Richard Beale Blaize pivot into real estate and finance, laying the foundations for modern capital markets in Lagos.</div>
+                    </div>
+                </div>
+
+                <div class="timeline-event">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-year">Early 1900s</div>
+                        <div class="timeline-description">Herbert Macaulay, a Saro descendant, becomes the father of Nigerian nationalism and leads the struggle for independence.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: How We Got Our Surnames -->
+        <section>
+            <h2>How We Got Our Surnames</h2>
+            <p style="margin-bottom: 30px; font-size: 1rem; color: #555;">
+                When Africans were liberated from slave ships and brought to Sierra Leone, colonial authorities dismissed their original names as "unpronounceable" or "barbaric." Systematically, liberated Africans were given new English names — often named after the prominent officials, missionaries, and abolitionists in the colony. These surnames became our family names.
+            </p>
+            <div class="surnames-grid">
+                <div class="surname-card">
+                    <div class="surname-name">Macaulay</div>
+                    <div class="surname-origin">Named after Zachary Macaulay</div>
+                    <div class="surname-person">A leading British abolitionist. His cousin Kenneth Macaulay was the colony's first "Superintendent of Captured Negroes."
+                    </div>
+                </div>
+
+                <div class="surname-card">
+                    <div class="surname-name">Johnson</div>
+                    <div class="surname-origin">Named after W.A.B. Johnson</div>
+                    <div class="surname-person">A Church Missionary Society missionary who managed the Liberated African village of Regent's Town.</div>
+                </div>
+
+                <div class="surname-card">
+                    <div class="surname-name">Cole</div>
+                    <div class="surname-origin">Named after Thomas Cole</div>
+                    <div class="surname-person">A colonial official in the Liberated African Department responsible for placement of freed captives.</div>
+                </div>
+
+                <div class="surname-card">
+                    <div class="surname-name">Thompson</div>
+                    <div class="surname-origin">Named after Thomas Perronet Thompson</div>
+                    <div class="surname-person">The first Crown Governor of Sierra Leone who oversaw the resettlement of liberated Africans.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Notable Saro People -->
+        <section>
+            <h2>Notable Saro People</h2>
+            <div class="notable-grid">
+                <div class="notable-card">
+                    <div class="notable-header">
+                        <div class="notable-name">Herbert Macaulay</div>
+                    </div>
+                    <div class="notable-content">
+                        <div class="notable-title">Father of Nigerian Nationalism</div>
+                        <div class="notable-description">A Saro descendant who led the anti-colonial movement and fought for Nigerian independence through journalism, political organizing, and intellectual leadership.</div>
+                    </div>
+                </div>
+
+                <div class="notable-card">
+                    <div class="notable-header">
+                        <div class="notable-name">Samuel Ajayi Crowther</div>
+                    </div>
+                    <div class="notable-content">
+                        <div class="notable-title">First African Anglican Bishop</div>
+                        <div class="notable-description">Created the first written Yoruba language system through his primer, grammar book, and dictionary. Translated the Bible into Yoruba, preserving the language.</div>
+                    </div>
+                </div>
+
+                <div class="notable-card">
+                    <div class="notable-header">
+                        <div class="notable-name">Funmilayo Ransome-Kuti</div>
+                    </div>
+                    <div class="notable-content">
+                        <div class="notable-title">Women's Rights Activist</div>
+                        <div class="notable-description">A Saro descendant and women's rights pioneer. Mother of Fela Kuti. Fought against colonial exploitation and gender inequality in Nigeria and across Africa.</div>
+                    </div>
+                </div>
+
+                <div class="notable-card">
+                    <div class="notable-header">
+                        <div class="notable-name">Richard Beale Blaize</div>
+                    </div>
+                    <div class="notable-content">
+                        <div class="notable-title">Pioneer Merchant & Financier</div>
+                        <div class="notable-description">A prominent Saro merchant who pioneered real estate and finance in Lagos, laying the foundations for modern capital markets in Nigeria.</div>
+                    </div>
+                </div>
+
+                <div class="notable-card">
+                    <div class="notable-header">
+                        <div class="notable-name">Sarah Forbes Bonetta Davies</div>
+                    </div>
+                    <div class="notable-content">
+                        <div class="notable-title">Survivor & Royal Goddaughter</div>
+                        <div class="notable-description">Rescued from slavery as a child, she was educated in Sierra Leone and became Queen Victoria's goddaughter, a symbol of possibility and resilience.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: The Identity Arc -->
+        <section class="arc-section">
+            <h2>The Identity Arc: Our Journey</h2>
+            <p style="margin-bottom: 20px; color: #555;">
+                This is how our ancestors transformed trauma into agency — how they built resilience across generations:
+            </p>
+            <div class="arc-flow">
+                <div class="arc-step">Enslaved</div>
+                <div class="arc-arrow">↓</div>
+                <div class="arc-step">Emancipated</div>
+                <div class="arc-arrow">↓</div>
+                <div class="arc-step">Educated in Sierra Leone</div>
+                <div class="arc-arrow">↓</div>
+                <div class="arc-step">Returned to Nigeria</div>
+                <div class="arc-arrow">↓</div>
+                <div class="arc-step">Commercial & Intellectual Pioneers</div>
+                <div class="arc-arrow">↓</div>
+                <div class="arc-step">Anglophiles</div>
+                <div class="arc-arrow">↓</div>
+                <div class="arc-step">Cultural Nationalists</div>
+                <div class="arc-arrow">↓</div>
+                <div class="arc-step">Architects of Modern Nigeria</div>
+            </div>
+        </section>
+
+        <!-- Section 6: Why This Matters -->
+        <section id="why-matters">
+            <h2>Why This Matters to Us</h2>
+            <p>
+                Our ancestors took the tragedy of enslavement and the severe constraints of colonial "freedom" and used them as tools to build the economic, educational, and political frameworks of modern Nigeria. They were not passive victims — they exercised significant agency, petitioning against mistreatment, pioneering industries, preserving Yoruba language and culture, and ultimately laying the groundwork for Nigerian independence.
+            </p>
+            <p style="margin-top: 15px;">
+                This is our heritage. We carry their resilience, their intelligence, and their refusal to be defined by the systems that tried to diminish them. Understanding this story is understanding ourselves — who we are, where we come from, and what we're capable of.
+            </p>
+        </section>
+    </div>
+
     <footer>
-        <p>&copy; 2026 Our Saro Heritage. All rights reserved.</p>
+        <p>A family reference guide to our Saro heritage</p>
+        <p style="margin-top: 8px; font-size: 0.85rem;">Printed or shared with love</p>
     </footer>
 </body>
 </html>
